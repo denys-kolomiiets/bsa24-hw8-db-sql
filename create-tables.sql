@@ -28,8 +28,8 @@ CREATE TABLE users (
     username VARCHAR(50) UNIQUE NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(50) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
     avatar_id INTEGER REFERENCES files(id),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -40,8 +40,8 @@ CREATE TABLE persons (
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     biography TEXT,
-    date_of_birth DATE,
-    gender VARCHAR(50),
+    date_of_birth DATE NOT NULL,
+    gender VARCHAR(50) NOT NULL,
     country_id INTEGER REFERENCES countries(id),
     primary_photo_id INTEGER REFERENCES files(id),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -62,11 +62,12 @@ CREATE TABLE movies (
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TYPE role_type AS ENUM ('leading', 'supporting', 'background');
 CREATE TABLE characters (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     description TEXT,
-    role VARCHAR(50),
+    role role_type,
     movie_id INTEGER REFERENCES movies(id),
     actor_id INTEGER REFERENCES persons(id),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

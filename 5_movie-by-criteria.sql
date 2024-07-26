@@ -4,13 +4,7 @@ SELECT
     m.release_date AS "Release date",
     m.duration AS "Duration",
     m.description AS "Description",
-    json_build_object(
-        'ID', f.id,
-        'File_name', f.file_name,
-        'Mime_type', f.mime_type,
-        'File_key', f.file_key,
-        'Url', f.url
-    ) AS "Poster",
+    row_to_json(f) AS "Poster",
     json_build_object(
         'ID', d.id,
         'First name', d.first_name,
